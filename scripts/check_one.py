@@ -1,11 +1,10 @@
 """Show one checked deal: uv run --locked python scripts/check_one.py PATH."""
 
-import argparse # helps read the arguments typed in the terminal.
-from pathlib import Path # Path represents a filesystem location.
+import argparse  # helps read the arguments typed in the terminal.
+from pathlib import Path  # Path represents a filesystem location.
 
 from evidence_lab.negotiation.casino import load_first_accepted
 from evidence_lab.negotiation.schema import score
-
 
 # The user must provide one argument called path. Convert it into a Path object.
 # Input comes from the command line or VS Code launch args, not from this file.

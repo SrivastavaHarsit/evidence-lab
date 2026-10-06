@@ -139,7 +139,7 @@ flowchart TD
     READ["LIBRARY TOOL: Path.read_text(encoding='utf-8')<br/>OUT: file contents as str"]:::tool
     JSON["LIBRARY TOOL: json.loads(text)<br/>OUT: parsed Python objects"]:::tool
     LIST{"Outer object is a list?"}
-    NEXT{"Next record available?<br/>enumerate supplies index and raw"} 
+    NEXT{"Next record available?<br/>enumerate supplies index and raw"}
     MAP["HELPER: _mapping(raw, 'dialogue')<br/>OUT: raw confirmed as dict"]:::helper
     MSG["HELPER: _messages(raw)<br/>OUT: nonempty list of dicts with string text"]:::helper
     LAST["messages[-1]['text']<br/>OUT: terminal event str"]:::data

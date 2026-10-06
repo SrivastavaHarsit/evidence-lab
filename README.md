@@ -27,8 +27,16 @@ uv run --locked ruff check .
 uv run --locked ruff format --check .
 ```
 
-There is no remote repository yet, so no clone URL exists. If you later clone
-your own remote, enter the cloned `evidence-lab` folder and use the same commands.
+The GitHub repository is intended to live at
+[`SrivastavaHarsit/evidence-lab`](https://github.com/SrivastavaHarsit/evidence-lab).
+Once published, you can copy it onto another machine with:
+
+```bash
+git clone https://github.com/SrivastavaHarsit/evidence-lab.git
+cd evidence-lab
+```
+
+Then use the same setup and check commands above.
 
 `uv sync --locked` creates `.venv`, a private Python environment for this project,
 and installs the versions in `uv.lock`. `uv run` uses that environment; no manual
@@ -131,13 +139,19 @@ and unrelated source fields are not audited.
 
 ## Inspect Git
 
-Git records snapshots of files. It is initialized on `main`, ready for your first
-commit. No commit or remote was created during setup.
+Git records snapshots of files. The original version is saved in the commit
+tagged `baseline-before-milestone-1`. That tag preserves the files as they were
+before repository documentation and formatting cleanup. It has 21 passing
+tests and a known Ruff spacing issue in two import comments. The cleanup on
+`main` fixes that spacing without changing program behavior.
+
+Follow the [Git workflow guide](docs/GIT_WORKFLOW.md) to save future changes,
+start milestone 1 on a branch, and inspect the original version.
 
 ```bash
 git branch --show-current        # current branch
 git status --short              # changed and new files
-git log --oneline --all          # saved history; empty until your first commit
+git log --oneline --decorate --all  # saved history and baseline tag
 git diff                        # changes to already tracked, unstaged files
 git ls-files --others --exclude-standard  # new files not yet tracked
 git diff --cached               # changes staged for the next commit
@@ -145,18 +159,18 @@ git status --short --ignored    # also show ignored paths, marked !!
 git check-ignore -v data/raw/casino.json   # the rule keeping raw data out
 ```
 
-Initially the files are untracked, so `git diff` is empty. `git status` and
-`git ls-files --others --exclude-standard` show them. `git log` has no saved
-history yet. When you have reviewed the files and want to save the first snapshot:
+When you have reviewed your next changes and want to save a snapshot:
 
 ```bash
 git add .
 git diff --cached --stat
-git commit -m "Initialize E000 one-record score reconstruction"
+git commit -m "Describe the changes you made"
+git push
 ```
 
 `git add` stages files (selects them for the next snapshot); `.gitignore` keeps
-raw data and the environment out. `git commit` saves the staged snapshot locally.
+raw data and the environment out. `git commit` saves the staged snapshot locally;
+`git push` uploads committed changes to GitHub after a remote is connected.
 
 Source attribution and the upstream CC BY 4.0 license are recorded in the
 [manifest](sources/casino.manifest.json) and [fixture notes](tests/fixtures/README.md).
