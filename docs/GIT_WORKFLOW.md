@@ -11,8 +11,9 @@ authentication as `SrivastavaHarsit` for future pushes.
 
 `baseline-before-milestone-1` is an annotated tag pointing to the first commit.
 It preserves the original project files, including the existing import-comment
-spacing issue. A later maintenance commit updates the repository instructions
-and fixes that formatting. Neither commit implements milestone 1.
+spacing issue and the original unavailable CI action reference. Later maintenance
+commits update the repository instructions and fix the formatting and CI action.
+These commits do not implement milestone 1.
 
 A commit is a saved snapshot. A branch is a movable name for your line of work.
 A tag names a particular snapshot; leave this baseline tag where it is.

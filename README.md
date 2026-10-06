@@ -142,8 +142,10 @@ and unrelated source fields are not audited.
 Git records snapshots of files. The original version is saved in the commit
 tagged `baseline-before-milestone-1`. That tag preserves the files as they were
 before repository documentation and formatting cleanup. It has 21 passing
-tests and a known Ruff spacing issue in two import comments. The cleanup on
-`main` fixes that spacing without changing program behavior.
+tests and a known Ruff spacing issue in two import comments. The original
+workflow also references an unavailable `setup-uv` action version. Later commits
+on `main` fix the formatting and action reference without changing program
+behavior.
 
 Follow the [Git workflow guide](docs/GIT_WORKFLOW.md) to save future changes,
 start milestone 1 on a branch, and inspect the original version.
