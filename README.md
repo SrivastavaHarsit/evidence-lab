@@ -27,9 +27,9 @@ uv run --locked ruff check .
 uv run --locked ruff format --check .
 ```
 
-The GitHub repository is intended to live at
+The public GitHub repository is
 [`SrivastavaHarsit/evidence-lab`](https://github.com/SrivastavaHarsit/evidence-lab).
-Once published, you can copy it onto another machine with:
+You can copy it onto another machine with:
 
 ```bash
 git clone https://github.com/SrivastavaHarsit/evidence-lab.git

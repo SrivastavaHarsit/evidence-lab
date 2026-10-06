@@ -2,10 +2,10 @@
 
 Run these commands from `/home/mastii/Desktop/hustle/evidence-lab`.
 
-The chosen GitHub repository is
+The public GitHub repository is
 [`SrivastavaHarsit/evidence-lab`](https://github.com/SrivastavaHarsit/evidence-lab),
-with public visibility. Publishing requires GitHub CLI authentication as
-`SrivastavaHarsit`.
+with `main` and the baseline tag pushed. This local repository uses GitHub CLI
+authentication as `SrivastavaHarsit` for future pushes.
 
 ## The saved starting point
 
