@@ -1,0 +1,22 @@
+{
+  "name": "CaSiNo",
+  "repository": "https://github.com/kushalchawla/CaSiNo",
+  "revision": "2f6ed4a6a55110152a7699fbaa8150d6036314be",
+  "url": "https://raw.githubusercontent.com/kushalchawla/CaSiNo/2f6ed4a6a55110152a7699fbaa8150d6036314be/data/casino.json",
+  "sha256": "4f2c4560a0070906ed018c3f0766e35f8f8f31b36274ebf35b608621915744ab",
+  "size_bytes": 4300019,
+  "local_path": "data/raw/casino.json",
+  "retrieval": {
+    "command": "uv run --locked python scripts/download_casino.py",
+    "receipt_path": "data/raw/casino.retrieval.json",
+    "note": "Each successful download writes its UTC timestamp and verified identity to the ignored local receipt. This committed manifest describes expected bytes."
+  },
+  "rights": {
+    "license": "CC-BY-4.0",
+    "license_source": "https://raw.githubusercontent.com/kushalchawla/CaSiNo/2f6ed4a6a55110152a7699fbaa8150d6036314be/LICENSE",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "attribution": "Kushal Chawla, Jaysa Ramirez, Rene Clever, Gale Lucas, Jonathan May, and Jonathan Gratch (2021). CaSiNo: A Corpus of Campsite Negotiation Dialogues for Automatic Negotiation Systems. NAACL-HLT, pp. 3167–3185.",
+    "paper_url": "https://aclanthology.org/2021.naacl-main.254/",
+    "note": "The pinned repository supplies a CC BY 4.0 license. Preserve attribution and identify changes when sharing excerpts. Raw data is not committed here; the test fixture documents its field omissions."
+  }
+}
