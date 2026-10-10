@@ -20,3 +20,22 @@ the full source identity.
 The opposite-proposer test changes the control roles and swaps the two proposal
 sides while preserving the allocation. That variant is constructed, not another
 observed dialogue. The independent arithmetic example in the tests is invented.
+
+## Four-record audit example
+
+`casino_audit_small.json` is a constructed teaching dataset, based on copies of
+the reduced dialogue-0 excerpt above. Its IDs are artificial:
+
+| File index | Dialogue ID | Modification | Expected outcome |
+| ---: | ---: | --- | --- |
+| 0 | 100 | Change only the ID | Accepted; scores 19 and 18 |
+| 1 | 101 | Change ID and participant 1's recorded score from 19 to 20 | Invalid; reconstructed score is still 19 |
+| 2 | 102 | Invent a minimal walkaway with no participant data or allocation | Walkaway; no deal or score |
+| 3 | 103 | Change ID, swap proposer/acceptor IDs and the proposal sides | Accepted; same participant allocations and scores |
+
+Expected: 4 total records, 3 accepted endings, 2 valid accepted deals, 1 walkaway,
+1 invalid record, and FAIL. The later valid record proves continuation after the
+bad accepted record. These are not four observed negotiations. Source-derived
+portions retain the attribution and license described above. Experiments should
+use a copy of this fixture, leaving both the original dataset and this test
+baseline intact.

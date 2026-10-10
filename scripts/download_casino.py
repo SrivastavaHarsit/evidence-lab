@@ -9,10 +9,9 @@ from urllib.request import urlopen
 ROOT = Path(__file__).resolve().parents[1]
 
 
-# Input: no arguments; read the pinned URL, checksum, size, and path from manifest.
-# Downloaded bytes -> SHA256/size checks -> local dataset and retrieval receipt.
-# Output: those files and printed confirmation; the function itself returns None.
-# A checksum/size mismatch raises an error before replacing the local dataset.
+# Input: the pinned URL, checksum, size, and path in the source manifest.
+# Work: download and verify the bytes before saving the dataset and receipt.
+# Output: saved files and printed confirmation; a failed check raises ValueError.
 def download() -> None:
     manifest = json.loads((ROOT / "sources/casino.manifest.json").read_text())
     with urlopen(manifest["url"], timeout=60) as response:

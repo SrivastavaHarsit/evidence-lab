@@ -1,7 +1,7 @@
-# CaSiNo input contract — Day 1
+# CaSiNo input contract — accepted parser and milestone-1 audit
 
 A contract describes the shape and meaning of data a function expects.
-This document describes the fields our current parser consumes, not every field
+This document describes the fields our parser and audit consume, not every field
 in the complete CaSiNo release. It is documentation, not an executable validator.
 The source identity is in [casino.manifest.json](casino.manifest.json).
 
@@ -100,9 +100,44 @@ shape and final `"Walk-Away"` text. Their allocations and participant informatio
 are not validated. Unknown final events and invalid encountered accepted records
 raise errors. Records after the selected deal are not checked.
 
+## Milestone-1 complete audit
+
+`load_audit(path)` in `audit.py` reads an outer JSON list and calls
+`audit_records(records)`. The latter visits every position and delegates each raw
+value to `audit_record(raw, record_index)`. Each result is exactly one of:
+
+- `accepted`: the unchanged `parse_accepted()` returned a checked `AcceptedDeal`.
+- `walkaway`: a dictionary has a nonnegative integer `dialogue_id` (not a bool),
+  every message has the shape required by `_messages()`, and the final text is
+  `"Walk-Away"`. Its participant information, sender IDs, allocations, and scores
+  are not validated; its outcome has no deal or score.
+- `invalid`: the record failed validation or has an unknown final event. Its
+  outcome retains the zero-based file position, valid ID when available, observed
+  final text when available, and the failure reason. Later records are visited.
+
+The audit's ID requirement for walkaways is stronger than the original
+`load_first_accepted()` selector's requirement. That selector is unchanged.
+IDs that are missing or invalid become `None` in outcome metadata; they do not
+prevent the file position and validation reason from being preserved.
+
+The audit observes only the final message before accepted parsing. The strict
+parser checks the complete accepted message list once, so an invalid earlier
+message with a final `"Accept-Deal"` counts as an accepted ending and an invalid
+record. An accepted ending is not proof of a valid deal.
+
+`AuditResult.outcomes` preserves source order. Checked deals, walkaway outcomes,
+invalid outcomes, counts, and `ok` are derived from it. Total records reconcile
+with valid accepted deals + walkaways + invalid records. An empty outer list is
+a clean audit of zero records. This does not establish an accepted study cohort.
+
+Invalid JSON, invalid UTF-8, and a non-list outer value produce contextual
+file-level errors without fabricated accounting. File read failures propagate.
+The script displays these as input errors. Unexpected programming exceptions
+are not converted into ordinary invalid-record outcomes.
+
 Extra fields are ignored except where exact keys are required above. In
 particular, acceptance `task_data`, ordinary-message IDs, demographics, and
-annotations are not validated by this Day-1 parser. The loader does not check
+annotations are not validated by this accepted parser. Neither loader checks
 the local file's checksum; the download script does that during acquisition.
 
 For a concrete example, open

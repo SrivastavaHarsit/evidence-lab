@@ -3,9 +3,6 @@
 from dataclasses import dataclass
 
 
-# Input: food, water, and firewood fields, intended to contain integer values.
-# Output: a frozen Resources object used for quantities or points per unit.
-# The caller determines the meaning; construction does not validate the fields.
 @dataclass(frozen=True)
 class Resources:
     """Food, water, and firewood, used for quantities or points per unit."""
@@ -15,9 +12,6 @@ class Resources:
     firewood: int
 
 
-# Input: an ID, Resources for values and allocation, and a source-recorded score.
-# Output: a frozen Participant grouping everything needed to reconstruct a score.
-# Construction stores fields; the parser and verify_scores perform the checks.
 @dataclass(frozen=True)
 class Participant:
     participant_id: str
@@ -26,9 +20,6 @@ class Participant:
     recorded_score: int
 
 
-# Input: dialogue/proposer IDs and the two Participants in fixed participant order.
-# Output: a frozen AcceptedDeal containing one negotiated outcome.
-# Participant 1 stays participant 1 even when participant 2 proposes the offer.
 @dataclass(frozen=True)
 class AcceptedDeal:
     dialogue_id: int
@@ -37,9 +28,9 @@ class AcceptedDeal:
     participant_2: Participant
 
 
-# Input: Resources for received quantities and Resources for points per unit.
-# Multiply each quantity by its value, then add the three contributions.
-# Output: the calculated integer score; this function does not read source scores.
+# Input: received quantities and points per unit, both stored as Resources.
+# Work: multiply each quantity by its value and add the three contributions.
+# Output: the calculated score; recorded source scores are not used.
 def score(allocation: Resources, values: Resources) -> int:
     """Each resource contributes quantity multiplied by points per unit."""
     return (
@@ -49,9 +40,9 @@ def score(allocation: Resources, values: Resources) -> int:
     )
 
 
-# Input: one AcceptedDeal containing both allocations, values, and recorded scores.
-# Recalculate each participant's score and compare it with the source-recorded one.
-# Output: (participant_1_score, participant_2_score), or ValueError on disagreement.
+# Input: a deal with both allocations, values, and recorded scores.
+# Work: calculate each score and compare it with that participant's recorded score.
+# Output: (participant_1_score, participant_2_score), or ValueError on a mismatch.
 def verify_scores(deal: AcceptedDeal) -> tuple[int, int]:
     """Return scores in participant 1/2 order, or raise on any disagreement."""
     computed = []

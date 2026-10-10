@@ -1,6 +1,10 @@
 # Watch one real negotiation in VS Code
 
-Use this before milestone 1 of 3: auditing every accepted record. You will put
+The line references below predate the function-comment cleanup. Find the quoted
+statements in current files when setting breakpoints; executable behavior is unchanged.
+
+Use this to revisit the original one-record checker. For the complete audit,
+follow [the milestone-1 guide](MILESTONE_1.md). Here you will put
 red dots in the source, start **Run and Debug**, and inspect the paused program
 in **Variables**, by hovering, and optionally in **Watch**.
 
@@ -65,26 +69,26 @@ Open each file with **Ctrl+P**, type its relative path, and press Enter. To reac
 a line, press **Ctrl+G**, type its number, and press Enter. Then click the margin
 to the left of that line number.
 
-For example: **Ctrl+P → `scripts/check_one.py` → Enter → Ctrl+G → `17` → Enter →
+For example: **Ctrl+P → `scripts/check_one.py` → Enter → Ctrl+G → `21` → Enter →
 click the margin**. Repeat for the other locations.
 
 The table is in execution order. A few locations will be visited more than once.
 
 | Stop | File | Line | Statement to put the red dot on | What will be ready to inspect |
 | --- | --- | ---: | --- | --- |
-| A | `scripts/check_one.py` | 17 | `deal = load_first_accepted(args.path)` | Input path, before loading |
-| B | `src/evidence_lab/negotiation/casino.py` | 152 | `if not isinstance(records, list):` | Loaded list of raw records |
-| C | `src/evidence_lab/negotiation/casino.py` | 161 | `if terminal == "Accept-Deal":` | Current record and its final event |
-| D | `src/evidence_lab/negotiation/casino.py` | 97 | `if proposal["text"] != "Submit-Deal":` | Final submission and acceptance pair |
-| E | `src/evidence_lab/negotiation/casino.py` | 115 | `proposer_id: _allocation(...)` | Roles and raw quantities, before the first allocation conversion |
-| F | `src/evidence_lab/negotiation/casino.py` | 118 | `for resource in ("food", "water", "firewood"):` | Both converted allocations; this loop header is revisited |
-| G | `src/evidence_lab/negotiation/casino.py` | 120 | `if total != UNITS_PER_RESOURCE:` | One resource total; stops three times |
-| H | `src/evidence_lab/negotiation/casino.py` | 73 | `outcomes = _mapping(...)` | Raw preferences and converted numeric values; stops for both participants |
-| I | `src/evidence_lab/negotiation/casino.py` | 139 | `verify_scores(deal)` | Complete deal, before score verification |
-| J | `src/evidence_lab/negotiation/schema.py` | 44 | `reconstructed = score(...)` | Participant's allocation and values, before calculation; stops twice |
-| K | `src/evidence_lab/negotiation/schema.py` | 45 | `if reconstructed != participant.recorded_score:` | Calculated and recorded scores; stops twice |
-| L | `src/evidence_lab/negotiation/schema.py` | 52 | `return computed[0], computed[1]` | Both checked scores |
-| M | `scripts/check_one.py` | 18 | `print(f"Dialogue ...")` | Checked deal returned to the starting script |
+| A | `scripts/check_one.py` | 21 | `deal = load_first_accepted(args.path)` | Input path, before loading |
+| B | `src/evidence_lab/negotiation/casino.py` | 235 | `if not isinstance(records, list):` | Loaded list of raw records |
+| C | `src/evidence_lab/negotiation/casino.py` | 244 | `if terminal == "Accept-Deal":` | Current record and its final event |
+| D | `src/evidence_lab/negotiation/casino.py` | 157 | `if proposal["text"] != "Submit-Deal":` | Final submission and acceptance pair |
+| E | `src/evidence_lab/negotiation/casino.py` | 184 | `proposer_id: _allocation(...)` | Roles and raw quantities, before the first allocation conversion |
+| F | `src/evidence_lab/negotiation/casino.py` | 191 | `for resource in ("food", "water", "firewood"):` | Both converted allocations; this loop header is revisited |
+| G | `src/evidence_lab/negotiation/casino.py` | 193 | `if total != UNITS_PER_RESOURCE:` | One resource total; stops three times |
+| H | `src/evidence_lab/negotiation/casino.py` | 121 | `outcomes = _mapping(...)` | Raw preferences and converted numeric values; stops for both participants |
+| I | `src/evidence_lab/negotiation/casino.py` | 218 | `verify_scores(deal)` | Complete deal, before score verification |
+| J | `src/evidence_lab/negotiation/schema.py` | 78 | `reconstructed = score(...)` | Participant's allocation and values, before calculation; stops twice |
+| K | `src/evidence_lab/negotiation/schema.py` | 82 | `if reconstructed != participant.recorded_score:` | Calculated and recorded scores; stops twice |
+| L | `src/evidence_lab/negotiation/schema.py` | 95 | `return computed[0], computed[1]` | Both checked scores |
+| M | `scripts/check_one.py` | 22 | `print(f"Dialogue ...")` | Checked deal returned to the starting script |
 
 Press **Ctrl+Shift+D** to open **Run and Debug**. Expand **BREAKPOINTS** near
 the bottom of the sidebar. Check that these locations are listed and checked.
@@ -100,12 +104,12 @@ first makes your first run easier to follow.
    the top.
 2. Select **Trace first CaSiNo deal**.
 3. Click the green **Start Debugging** triangle next to it, or press **F5**.
-4. Wait for the program to pause at **A: `check_one.py`, line 17**.
+4. Wait for the program to pause at **A: `check_one.py`, line 21**.
 
 This saved configuration always starts the checker, even if you are viewing
 `casino.py` or this guide. Use this configuration's start button for the session.
 
-If execution pauses at line 15 with **SystemExit: 2** and the output says
+If execution pauses at line 16 with **SystemExit: 2** and the output says
 `the following arguments are required: path`, the checker was launched without
 its dataset argument. It stopped before assigning `args`, so that variable
 cannot appear yet. Click **Stop** (**Shift+F5**), choose **Trace first CaSiNo
@@ -159,7 +163,7 @@ That expression error does not mean the program failed.
 
 ## 6. Follow the data, one stop at a time
 
-### A — Input location: `check_one.py`, line 17
+### A — Input location: `check_one.py`, line 21
 
 Expand **Locals → args → path**, or hover over `args.path`.
 
@@ -171,7 +175,7 @@ the result should be `True`.
 
 Press **F5** to continue to B.
 
-### B — Loaded data: `casino.py`, line 152
+### B — Loaded data: `casino.py`, line 235
 
 Expand **Locals → records**, then its entry **0**. Look for `dialogue_id` and
 `chat_logs` inside that first dictionary. Large lists may be grouped into
@@ -189,7 +193,7 @@ variable. It has loaded all entries; it has not checked all their deals.
 
 Press **F5**.
 
-### C — Record selection: `casino.py`, line 161
+### C — Record selection: `casino.py`, line 244
 
 Inspect **index**, **terminal**, and **raw** in Locals. Expand
 **raw → chat_logs**.
@@ -206,7 +210,7 @@ will not process the remaining 1,029 records.
 
 Press **F5**.
 
-### D — Final message pair: `casino.py`, line 97
+### D — Final message pair: `casino.py`, line 157
 
 Expand **proposal** and **acceptance** in Locals. Expand
 **proposal → task_data**. You can also inspect `messages[-2:]` in Watch or
@@ -227,7 +231,7 @@ The raw quantities are strings. `"2"` is text; `2` is an integer.
 
 Predict who owns the quantities under `issue2youget`. Then press **F5**.
 
-### E — Resolve "you" and "they": `casino.py`, line 115
+### E — Resolve "you" and "they": `casino.py`, line 184
 
 Inspect **proposer_id**, **acceptor_id**, and **task**.
 
@@ -245,7 +249,7 @@ section below before continuing from this stop.
 
 For the main walkthrough, press **F5**.
 
-### F — Converted allocations: `casino.py`, line 118
+### F — Converted allocations: `casino.py`, line 191
 
 Expand **allocations**, then both participant IDs, then their resource fields.
 
@@ -267,7 +271,7 @@ Press **F5** to reach the first G. This dot is on a loop header, so you will
 return to F between the resource checks and once more as the loop ends. The
 allocations stay the same on those return visits; press **F5** again each time.
 
-### G — Resource totals: `casino.py`, line 120, three visits
+### G — Resource totals: `casino.py`, line 193, three visits
 
 Inspect **resource**, **total**, and **UNITS_PER_RESOURCE**. The constant may
 appear under Globals; hovering over it also works.
@@ -293,7 +297,7 @@ The sums are `1 + 2`, `0 + 3`, and `3 + 0`. Individual quantity bounds and
 combined resource totals are separate checks. Two individually permitted
 quantities could still have an impossible combined total.
 
-### H — Preferences become points: `casino.py`, line 73, two visits
+### H — Preferences become points: `casino.py`, line 121, two visits
 
 Inspect **participant_id**, **allocation**, **preferences**, and **values**.
 The preference conversion on the preceding statement has finished; outcomes
@@ -326,7 +330,7 @@ its own local name `info` for a different container.
 
 Press **F5** to reach I.
 
-### I — Complete deal: `casino.py`, line 139
+### I — Complete deal: `casino.py`, line 218
 
 Expand **deal**, then **participant_1** and **participant_2**, and their
 **allocation**, **values**, and **recorded_score** fields.
@@ -348,7 +352,7 @@ Expand **CALL STACK**. You should see `parse_accepted()` called by
 `load_first_accepted()`, called by `check_one.py`. The callers are waiting for
 the result. Keep `parse_accepted()` selected, then press **F5**.
 
-### J — Before arithmetic: `schema.py`, line 44
+### J — Before arithmetic: `schema.py`, line 78
 
 Expand **participant → allocation** and **participant → values**.
 
@@ -356,7 +360,7 @@ First visit: participant 1, allocation `(1, 0, 3)`, values `(4, 3, 5)`.
 Predict `1 × 4 + 0 × 3 + 3 × 5 = 19`.
 
 To practice **Step Into**, press **F11** now. VS Code enters `score()` and
-highlights its arithmetic near lines 33–36. Inspect **allocation** and
+highlights its arithmetic near lines 59–61. Inspect **allocation** and
 **values** in this function's Locals, or hover over them. These are the inputs
 to the calculation; their names differ from the caller's `participant`.
 
@@ -367,7 +371,7 @@ inputs and result.
 Later, J will run for participant 2. Its allocation is `(2, 3, 0)` and values
 are `(3, 4, 5)`. Predict `2 × 3 + 3 × 4 + 0 × 5 = 18`, then press **F5**.
 
-### K — Compare calculated and recorded scores: line 45, two visits
+### K — Compare calculated and recorded scores: line 82, two visits
 
 Inspect **participant.participant_id**, **reconstructed**,
 **participant.recorded_score**, and **computed**.
@@ -384,7 +388,7 @@ happens after the disagreement check passes.
 At the first K, press **F5** to reach J for participant 2. After that J, press
 **F5** to reach the second K. After inspecting the second K, press **F5** to L.
 
-### L — Both checks passed: `schema.py`, line 52
+### L — Both checks passed: `schema.py`, line 95
 
 Expand **computed**. Expected: `[19, 18]`.
 
@@ -394,7 +398,7 @@ The parser uses this function to enforce verification and then returns the
 
 Press **F5**.
 
-### M — Return to the script: `check_one.py`, line 18
+### M — Return to the script: `check_one.py`, line 22
 
 Expand **deal** in Locals. It is the checked result returned to the original
 script: dialogue 0, proposer participant 2, recorded scores 19 and 18.
@@ -416,9 +420,9 @@ session yourself, click the toolbar's square Stop button or press **Shift+F5**.
 ## 7. Optional: see one string become an integer
 
 Use this after you are comfortable with the main stops. Start another run,
-reach E at `casino.py` line 115, and keep the program paused there.
+reach E at `casino.py` line 184, and keep the program paused there.
 
-1. Add a red dot on **line 29** in `_integer()`, at
+1. Add a red dot on **line 40** in `_integer()`, at
    `if isinstance(value, str) and ...`.
 2. Right-click that dot and choose **Edit Breakpoint…**. Choose an expression
    condition if the menu asks, then enter:
@@ -427,12 +431,12 @@ reach E at `casino.py` line 115, and keep the program paused there.
    field == "issue2youget.Food"
    ```
 
-3. Add another red dot on **line 31**, at
+3. Add another red dot on **line 46**, at
    `if type(value) is not int or not 0 <= value <= maximum:`.
 4. Give it the **same condition** using Edit Breakpoint.
-5. Press **F5** from E. At line 29, inspect `field`, `value`, and `maximum`.
+5. Press **F5** from E. At line 40, inspect `field`, `value`, and `maximum`.
    Expected: `"issue2youget.Food"`, string `"2"`, and maximum 3.
-6. Press **F5**. At line 31, `value` is integer `2` and `maximum` is still 3.
+6. Press **F5**. At line 46, `value` is integer `2` and `maximum` is still 3.
    The conversion has executed, and the type/bounds check is next.
 7. Press **F5** to reach F and resume the main guide.
 

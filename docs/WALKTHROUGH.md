@@ -1,5 +1,10 @@
 # Evidence Lab: a beginner's walkthrough
 
+This is the original one-record lesson. For the earlier annotated full-audit
+code, use [the complete milestone-1 self-study walkthrough](MILESTONE_1_WALKTHROUGH.md).
+Both guides predate the function-comment cleanup. Locate their quoted statements
+in current files instead of relying on the old line numbers.
+
 Read this beside the source files. The line numbers below refer to the code as inspected for this walkthrough. You do not need to memorize them. Blank lines separate ideas; closing brackets finish expressions and do not perform a separate task.
 
 This guide explains the program we actually have, including its shortcuts and limitations. It does not add another study or change the program.

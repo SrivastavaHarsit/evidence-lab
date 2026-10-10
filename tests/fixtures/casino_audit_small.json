@@ -1,0 +1,161 @@
+[
+  {
+    "dialogue_id": 100,
+    "chat_logs": [
+      {
+        "text": "Submit-Deal",
+        "task_data": {
+          "issue2youget": {
+            "Firewood": "0",
+            "Water": "3",
+            "Food": "2"
+          },
+          "issue2theyget": {
+            "Firewood": "3",
+            "Water": "0",
+            "Food": "1"
+          }
+        },
+        "id": "mturk_agent_2"
+      },
+      {
+        "text": "Accept-Deal",
+        "task_data": {
+          "data": "accept_deal"
+        },
+        "id": "mturk_agent_1"
+      }
+    ],
+    "participant_info": {
+      "mturk_agent_1": {
+        "value2issue": {
+          "Medium": "Food",
+          "Low": "Water",
+          "High": "Firewood"
+        },
+        "outcomes": {
+          "points_scored": 19
+        }
+      },
+      "mturk_agent_2": {
+        "value2issue": {
+          "Low": "Food",
+          "Medium": "Water",
+          "High": "Firewood"
+        },
+        "outcomes": {
+          "points_scored": 18
+        }
+      }
+    }
+  },
+  {
+    "dialogue_id": 101,
+    "chat_logs": [
+      {
+        "text": "Submit-Deal",
+        "task_data": {
+          "issue2youget": {
+            "Firewood": "0",
+            "Water": "3",
+            "Food": "2"
+          },
+          "issue2theyget": {
+            "Firewood": "3",
+            "Water": "0",
+            "Food": "1"
+          }
+        },
+        "id": "mturk_agent_2"
+      },
+      {
+        "text": "Accept-Deal",
+        "task_data": {
+          "data": "accept_deal"
+        },
+        "id": "mturk_agent_1"
+      }
+    ],
+    "participant_info": {
+      "mturk_agent_1": {
+        "value2issue": {
+          "Medium": "Food",
+          "Low": "Water",
+          "High": "Firewood"
+        },
+        "outcomes": {
+          "points_scored": 20
+        }
+      },
+      "mturk_agent_2": {
+        "value2issue": {
+          "Low": "Food",
+          "Medium": "Water",
+          "High": "Firewood"
+        },
+        "outcomes": {
+          "points_scored": 18
+        }
+      }
+    }
+  },
+  {
+    "dialogue_id": 102,
+    "chat_logs": [
+      {
+        "text": "Walk-Away",
+        "id": "mturk_agent_2"
+      }
+    ]
+  },
+  {
+    "dialogue_id": 103,
+    "chat_logs": [
+      {
+        "text": "Submit-Deal",
+        "task_data": {
+          "issue2youget": {
+            "Firewood": "3",
+            "Water": "0",
+            "Food": "1"
+          },
+          "issue2theyget": {
+            "Firewood": "0",
+            "Water": "3",
+            "Food": "2"
+          }
+        },
+        "id": "mturk_agent_1"
+      },
+      {
+        "text": "Accept-Deal",
+        "task_data": {
+          "data": "accept_deal"
+        },
+        "id": "mturk_agent_2"
+      }
+    ],
+    "participant_info": {
+      "mturk_agent_1": {
+        "value2issue": {
+          "Medium": "Food",
+          "Low": "Water",
+          "High": "Firewood"
+        },
+        "outcomes": {
+          "points_scored": 19
+        }
+      },
+      "mturk_agent_2": {
+        "value2issue": {
+          "Low": "Food",
+          "Medium": "Water",
+          "High": "Firewood"
+        },
+        "outcomes": {
+          "points_scored": 18
+        }
+      }
+    }
+  }
+]

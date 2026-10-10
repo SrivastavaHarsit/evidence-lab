@@ -1,17 +1,32 @@
-# Evidence Lab — E000, Day 1
+# Evidence Lab — E000, milestone 1
 
-We take one accepted CaSiNo negotiation, independently reconstruct its allocation
-and scores, and verify that we understand the source correctly.
+We visit every CaSiNo record, reconstruct accepted allocations and scores with
+the existing strict parser, and account explicitly for walkaways and invalid
+records. The checked local source has **1,030 records: 1,005 valid accepted
+deals, 25 walkaways, and 0 invalid records**.
 
-We have **not** performed the complete E000 audit, calculated Pareto dominance
-across accepted deals, analyzed dialogue language, trained an ML model, or built
-an API, database, or frontend.
+E000 asks how often another feasible allocation could improve at least one
+participant's assigned score without reducing the other's. Milestone 1 prepares
+the checked deals. Milestone 2 will measure exact Pareto dominance; milestone 3
+will save reproducible results and a method/limitations report.
 
 ## Start here
 
-For a beginner's explanation of every function and statement, follow the
+The study guides below preserve the earlier annotated source layout. Function
+comments have since been simplified without changing behavior; use the quoted
+statements to find current breakpoint locations rather than their old line numbers.
+
+Start with the [milestone-1 HTML study guide](docs/MILESTONE_1_WALKTHROUGH.html).
+Copy that single file to your second device and open it in a browser; it works
+offline and includes zoomable flowcharts, source comments and line links,
+checkpoints, search, and a saved reading position. Follow the source on your
+coding device: overview, data shapes, commented blocks, line-by-line explanations,
+then debugger and fixture experiments. The [Markdown version](docs/MILESTONE_1_WALKTHROUGH.md)
+contains the same lesson. The [shorter milestone-1 guide](docs/MILESTONE_1.md) remains
+available for quick reference.
+For a beginner's explanation of the original parser and every statement, use the
 [line-by-line walkthrough with flowcharts](docs/WALKTHROUGH.md).
-Before the batch-audit milestone, follow the
+To revisit one record, follow the
 [first VS Code debugger session](docs/DEBUGGER_FIRST_SESSION.md) to place red-dot
 breakpoints, inspect intermediate data, and compare it with expected values.
 The [input contract](sources/casino.input.md) shows the raw JSON fields, including
@@ -84,20 +99,43 @@ For participant 1, `1 × 4 + 0 × 3 + 3 × 5 = 19`. Each resource totals three u
 across the two people. High, Medium, and Low preferences mean 5, 4, and 3 points
 per unit, respectively ([CaSiNo paper, section 2](https://aclanthology.org/2021.naacl-main.254.pdf)).
 
+## Audit every record
+
+In VS Code, open **Run and Debug** and select **Trace CaSiNo audit (small
+example)**. This works with either `hustle` or `evidence-lab` as the open folder.
+The example deliberately contains one bad score and ends in FAIL:
+**4 = 2 valid accepted + 1 walkaway + 1 invalid**, with 3 accepted endings.
+Follow the [breakpoint guide](docs/MILESTONE_1.md) to inspect those outcomes.
+Select **Trace CaSiNo audit (full dataset)** for the complete local source.
+
+The equivalent observation commands, run from the repository folder, are:
+
+```bash
+uv run --locked python scripts/check_all.py tests/fixtures/casino_audit_small.json
+uv run --locked python scripts/check_all.py data/raw/casino.json
+```
+
+The first exits with code 1 because its invalid record is intentional. A clean
+audit exits with code 0; file/JSON/outer-structure failures exit with code 2.
+The audit retains one `RecordOutcome` per source position, exposes checked deals
+and diagnostics through `AuditResult`, and continues after validation failures.
+Its summary reconciles all three accounting categories. It reads the complete
+JSON list into memory and writes no study-output files.
+
 ## Follow the data
 
 ```text
 CaSiNo JSON
     ↓
-casino.py
+load_audit → audit_records → audit_record
     ↓
-validated Python record
+accepted: parse_accepted → allocation and score checks
+walkaway: ID and message checks
+invalid: preserved failure diagnostic
     ↓
-score reconstruction
+one ordered outcome per record
     ↓
-comparison with recorded score
-    ↓
-pass / visible failure
+reconciled accounting and PASS / FAIL
 ```
 
 A parser translates raw JSON dictionaries into named Python records. Here those
@@ -121,9 +159,11 @@ does not validate data, so external source data must go through the parser.
 `mturk_agent_2`; these never switch when the proposer changes. The parser checks
 the final submission/acceptance pair, integer quantities from 0 to 3, resource
 conservation, complete preferences, and both scores. Missing values, including
-`None`, are errors. Walkaways are passed over because there is no accepted deal;
-an invalid accepted record stops processing. Records after the selected deal
-and unrelated source fields are not audited.
+`None`, are errors. The original one-record checker passes over walkaways and
+stops on an invalid encountered record or its first valid accepted deal. The
+full audit instead keeps invalid outcomes visible and continues through every
+record. Walkaways have no deal or score; the audit checks their ID and message
+structure. Unrelated source fields remain outside these checks.
 
 ## Study the files in this order
 
@@ -177,10 +217,11 @@ raw data and the environment out. `git commit` saves the staged snapshot locally
 Source attribution and the upstream CC BY 4.0 license are recorded in the
 [manifest](sources/casino.manifest.json) and [fixture notes](tests/fixtures/README.md).
 
-## Visual map: follow every function and its input/output
+## Original parser visual map
 
-Open the **[complete visual flow map](docs/FLOW_MAP.html)** in a browser for
-rendered diagrams with zoom and full-screen controls. Its editable source is
+Open the **[one-record visual flow map](docs/FLOW_MAP.html)** in a browser for
+rendered diagrams with zoom and full-screen controls. The new audit flow is in
+[MILESTONE_1.md](docs/MILESTONE_1.md). The original map's editable source is
 [FLOW_MAP.md](docs/FLOW_MAP.md).
 
 Start with **map 2: who calls whom**, then **map 4: the order in which the deal is

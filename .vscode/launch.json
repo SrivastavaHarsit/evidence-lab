@@ -13,6 +13,32 @@
       "internalConsoleOptions": "openOnSessionStart",
       "redirectOutput": true,
       "justMyCode": true
+    },
+    {
+      "name": "Trace CaSiNo audit (small example)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/check_all.py",
+      "args": ["tests/fixtures/casino_audit_small.json"],
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "redirectOutput": true,
+      "justMyCode": true
+    },
+    {
+      "name": "Trace CaSiNo audit (full dataset)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/check_all.py",
+      "args": ["data/raw/casino.json"],
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "redirectOutput": true,
+      "justMyCode": true
     }
   ]
 }
